@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.IssueFieldMapper">
+    <resultMap id="BaseResultMap" type="com.pingan.starlink.model.IssueField">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="field_id" jdbcType="VARCHAR" property="fieldId"/>
+        <result column="field_name" jdbcType="VARCHAR" property="fieldName"/>
+        <result column="field_key" jdbcType="VARCHAR" property="fieldKey"/>
+    </resultMap>
+</mapper>

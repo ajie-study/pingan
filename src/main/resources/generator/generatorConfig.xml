@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="application-mybatis.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.pingan.starlink.util.BaseMapper"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring..username}"
+                        password="${spring.datasource.password}">
+            <property name="useInformationSchema" value="true"/>
+            <property name="remarks" value="true"/>
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.pingan.starlink.model" targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.pingan.starlink.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!-- 新增表时才在这里添加注释后的table标签,其余均不修改此文件. -->
+        <!--<table tableName="project" />-->
+        <!--<table tableName="notic" />-->
+        <!--<table tableName="issue_field" />-->
+        <!--<table tableName="git_branch" />-->
+        <!--<table tableName="version_management" />-->
+        <!--<table tableName="git_project" />-->
+        <!--<table tableName="jira_gitProject_relation" />-->
+        <!--  <table tableName="gitgroup_department_relation" />-->
+        <!-- <table tableName="git_pull_requests" />-->
+        <!-- <table tableName="ml_user" /> -->
+        <!--<table tableName="ml_department" />-->
+        <!-- <table tableName="ml_user_project_relation" /> -->
+        <!--<table tableName="artifactory_repo" />-->
+        <!--<table tableName="git_group" />-->
+        <!--<table tableName="cms_appid_project_relation" />-->
+    </context>
+</generatorConfiguration>

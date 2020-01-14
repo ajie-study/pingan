@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.UcdDeployMapper">
+    <resultMap id="BaseResultMap" type="com.pingan.starlink.model.UcdDeploy">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="project_key" jdbcType="VARCHAR" property="projectKey"/>
+        <result column="release_date" jdbcType="TIMESTAMP" property="releaseDate"/>
+        <result column="release_repository" jdbcType="VARCHAR" property="releaseRepository"/>
+        <result column="release_product" jdbcType="VARCHAR" property="releaseProduct"/>
+        <result column="release_version" jdbcType="VARCHAR" property="releaseVersion"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="environment" jdbcType="VARCHAR" property="environment"/>
+        <result column="module" jdbcType="VARCHAR" property="module"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    uuid, project_key, release_date, release_repository, release_product, release_version, 
+    description, environment, module, address, status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ucd_deploy
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ucd_deploy
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pingan.starlink.model.UcdDeploy">
+    insert into ucd_deploy (uuid, project_key, release_date, 
+      release_repository, release_product, release_version, 
+      description, environment, module, 
+      address, status)
+    values (#{uuid,jdbcType=VARCHAR}, #{projectKey,jdbcType=VARCHAR}, #{releaseDate,jdbcType=TIMESTAMP}, 
+      #{releaseRepository,jdbcType=VARCHAR}, #{releaseProduct,jdbcType=VARCHAR}, #{releaseVersion,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{environment,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pingan.starlink.model.UcdDeploy">
+        insert into ucd_deploy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="projectKey != null">
+                project_key,
+            </if>
+            <if test="releaseDate != null">
+                release_date,
+            </if>
+            <if test="releaseRepository != null">
+                release_repository,
+            </if>
+            <if test="releaseProduct != null">
+                release_product,
+            </if>
+            <if test="releaseVersion != null">
+                release_version,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="environment != null">
+                environment,
+            </if>
+            <if test="module != null">
+                module,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="projectKey != null">
+                #{projectKey,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseDate != null">
+                #{releaseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="releaseRepository != null">
+                #{releaseRepository,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseProduct != null">
+                #{releaseProduct,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseVersion != null">
+                #{releaseVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="environment != null">
+                #{environment,jdbcType=VARCHAR},
+            </if>
+            <if test="module != null">
+                #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pingan.starlink.model.UcdDeploy">
+        update ucd_deploy
+        <set>
+            <if test="projectKey != null">
+                project_key = #{projectKey,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseDate != null">
+                release_date = #{releaseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="releaseRepository != null">
+                release_repository = #{releaseRepository,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseProduct != null">
+                release_product = #{releaseProduct,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseVersion != null">
+                release_version = #{releaseVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="environment != null">
+                environment = #{environment,jdbcType=VARCHAR},
+            </if>
+            <if test="module != null">
+                module = #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pingan.starlink.model.UcdDeploy">
+    update ucd_deploy
+    set project_key = #{projectKey,jdbcType=VARCHAR},
+      release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      release_repository = #{releaseRepository,jdbcType=VARCHAR},
+      release_product = #{releaseProduct,jdbcType=VARCHAR},
+      release_version = #{releaseVersion,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      environment = #{environment,jdbcType=VARCHAR},
+      module = #{module,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectUcdDeploys" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ucd_deploy
+        WHERE 1 = 1
+        <if test="uuid != null">
+          AND  uuid = #{uuid,jdbcType=VARCHAR}
+        </if>
+        <if test="projectKey != null">
+          AND  project_key = #{projectKey,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

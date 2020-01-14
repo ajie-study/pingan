@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pingan.starlink.mapper.GitGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.GitGroup" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="gitgroup_id" property="gitgroupId" jdbcType="INTEGER" />
+    <result column="gitgroup_fullname" property="gitgroupFullname" jdbcType="VARCHAR" />
+    <result column="gitgroup_fullpath" property="gitgroupFullpath" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    uuid, gitgroup_id, gitgroup_fullname, gitgroup_fullpath, token
+  </sql>
+
+  <select id="getTokenByGroupId" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select token from git_group where gitgroup_id = #{groupId}
+  </select>
+
+</mapper>

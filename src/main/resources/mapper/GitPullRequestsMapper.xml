@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pingan.starlink.mapper.GitPullRequestsMapper" >
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.GitPullRequests" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="git_pr_id" property="gitPrId" jdbcType="INTEGER" />
+    <result column="git_pr_title" property="gitPrTitle" jdbcType="VARCHAR" />
+    <result column="git_pr_createby" property="gitPrCreateby" jdbcType="VARCHAR" />
+    <result column="git_pr_createat" property="gitPrCreateat" jdbcType="TIMESTAMP" />
+    <result column="git_pr_status" property="gitPrStatus" jdbcType="VARCHAR" />
+    <result column="jira_project_key" property="jiraProjectKey" jdbcType="VARCHAR" />
+    <result column="git_project_id" property="gitProjectId" javaType="INTEGER" />
+    <result column="git_pr_assignee" property="gitPrAssignee" jdbcType="VARCHAR" />
+    <result column="jira_issue" property="jiraIssue" jdbcType="VARCHAR" />
+    <result column="git_pr_describe" property="gitPrDescribe" jdbcType="VARCHAR" />
+    <result column="mg_commit_id" property="mgCommitId" jdbcType="VARCHAR" />
+    <result column="mg_commitby" property="mgCommitby" jdbcType="VARCHAR" />
+    <result column="mg_commitat" property="mgCommitat" jdbcType="DATE" />
+    <result column="mg_commit_info" property="mgCommitInfo" jdbcType="VARCHAR" />
+    <result column="git_pr_iid" property="gitPrIid" jdbcType="INTEGER" />
+    <result column="mg_branch_name" property="mgBranchName" jdbcType="VARCHAR" />
+    <result column="git_pr_source" property="gitPrSource" jdbcType="VARCHAR" />
+    <result column="git_pr_target" property="gitPrTarget" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <update id="updateGitprStatusByUuid">
+    update git_pull_requests
+    set git_pr_status = #{state}
+    where uuid = #{uuid}
+  </update>
+
+
+  <update id="updateGitpullrequests" parameterType="com.pingan.starlink.model.GitPullRequests">
+    update git_pull_requests
+    <set>
+      <if test="pr.uuid != null">
+        uuid = #{pr.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitPrTitle != null">
+        git_pr_title = #{pr.gitPrTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitPrCreateby != null">
+        git_pr_createby = #{pr.gitPrCreateby,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitPrCreateat != null">
+        git_pr_createat = #{pr.gitPrCreateat,jdbcType=DATE},
+      </if>
+      <if test="pr.gitPrStatus != null">
+        git_pr_status = #{pr.gitPrStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.jiraProjectKey != null">
+        jira_project_key = #{pr.jiraProjectKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitProjectId != null">
+        git_project_id = #{pr.gitPrTitle,jdbcType=INTEGER},
+      </if>
+      <if test="pr.gitPrAssignee != null">
+        git_pr_assignee = #{pr.gitPrAssignee,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.jiraIssue != null">
+        jira_issue = #{pr.jiraIssue,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitPrDescribe != null">
+        git_pr_describe = #{pr.gitPrDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.mgCommitId != null">
+        mg_commit_id = #{pr.mgCommitId,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.mgCommitby != null">
+        mg_commitby = #{pr.mgCommitby,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.mgCommitat != null">
+        mg_commitat = #{pr.mgCommitat,jdbcType=DATE},
+      </if>
+      <if test="pr.mgCommitInfo != null">
+        mg_commit_info = #{pr.mgCommitInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitPrIid != null">
+        git_pr_iid = #{pr.gitPrIid,jdbcType=INTEGER},
+      </if>
+      <if test="pr.mgBranchName != null">
+        mg_branch_name = #{pr.mgBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="pr.gitPrSource != null">
+        git_pr_source = #{pr.gitPrSource,jdbcType=INTEGER},
+      </if>
+      <if test="pr.gitPrTarget != null">
+        git_pr_target = #{pr.gitPrTarget,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where git_pr_id = #{pr.gitPrId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectGitprbyId" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.GitPullRequests">
+      select * from git_pull_requests where git_project_id = #{gitProjectId}
+    </select>
+  <select id="selectGitpr" resultType="com.pingan.starlink.model.GitPullRequests" resultMap="BaseResultMap">
+   select * from git_pull_requests where git_project_id = #{gitProjectId} and git_pr_status = #{status}
+  </select>
+
+  <select id="getGitPrByPrid" resultType="com.pingan.starlink.model.GitPullRequests" resultMap="BaseResultMap">
+      select * from git_pull_requests where git_pr_id = #{gitPrId}
+  </select>
+
+
+</mapper>

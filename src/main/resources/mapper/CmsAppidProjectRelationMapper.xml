@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pingan.starlink.mapper.CmsAppidProjectRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.CmsAppidProjectRelation" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.MlUserMapper">
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.MlUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="office_address" jdbcType="VARCHAR" property="officeAddress" />
+    <result column="landline_phone" jdbcType="VARCHAR" property="landlinePhone" />
+    <result column="extra_info" jdbcType="VARCHAR" property="extraInfo" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    uuid, username, created_at, updated_at, permission, type, realname, department, position,
+    mobile, email, office_address, landline_phone, extra_info
+  </sql>
+
+  <sql id="updateClause">
+    <if test="username != null">
+      username = #{username,jdbcType=VARCHAR},
+    </if>
+    <if test="createdAt != null">
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+    </if>
+    <if test="updatedAt != null">
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+    </if>
+    <if test="permission != null">
+      permission = #{permission,jdbcType=VARCHAR},
+    </if>
+    <if test="type != null">
+      type = #{type,jdbcType=VARCHAR},
+    </if>
+    <if test="realname != null">
+      realname = #{realname,jdbcType=VARCHAR},
+    </if>
+    <if test="department != null">
+      department = #{department,jdbcType=VARCHAR},
+    </if>
+    <if test="position != null">
+      position = #{position,jdbcType=VARCHAR},
+    </if>
+    <if test="mobile != null">
+      mobile = #{mobile,jdbcType=VARCHAR},
+    </if>
+    <if test="email != null">
+      email = #{email,jdbcType=VARCHAR},
+    </if>
+    <if test="officeAddress != null">
+      office_address = #{officeAddress,jdbcType=VARCHAR},
+    </if>
+    <if test="landlinePhone != null">
+      landline_phone = #{landlinePhone,jdbcType=VARCHAR},
+    </if>
+    <if test="extraInfo != null">
+      extra_info = #{extraInfo,jdbcType=VARCHAR},
+    </if>
+  </sql>
+
+  <select id="selectByDepartment"  parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ml_user
+    <where>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <update id="updateByUser" parameterType="com.pingan.starlink.model.MlUser">
+    update ml_user set
+    <trim suffix="" suffixOverrides=",">
+      <include refid="updateClause" />
+    </trim>
+    where
+    username = #{username,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectUserByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ml_user
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ml_user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUsersByProjectKey" resultType="com.pingan.starlink.vo.jira.UserVO">
+   select * from ml_user_project_relation t1
+    LEFT JOIN ml_user t2
+    on t1.username = t2.username
+    WHERE t1.project_key = #{projectKey}
+  </select>
+
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.pingan.starlink.model.User">
+    insert into user(username,password,sex,address)
+    values(#{username},#{password},#{sex},#{address})
+  </insert>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pingan.starlink.mapper.GitProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.GitProject" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="git_project_id" property="gitProjectId" jdbcType="INTEGER" />
+    <result column="git_namespace_id" property="gitNamespaceId" jdbcType="INTEGER" />
+    <result column="git_project_name" property="gitProjectName" jdbcType="VARCHAR" />
+    <result column="git_project_url" property="gitProjectUrl" jdbcType="VARCHAR" />
+    <result column="git_project_description" property="gitProjectDescription" jdbcType="VARCHAR" />
+    <result column="git_project_created_at" property="gitProjectCreatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+    <update id="updateGitproject" parameterType="com.pingan.starlink.mapper.GitProjectMapper">
+        update git_project
+        <set>
+          <if test="gp.uuid != null">
+            uuid = #{gp.uuid,jdbcType=VARCHAR},
+          </if>
+          <if test="gp.gitNamespaceId != null">
+            git_namespace_id = #{gp.gitNamespaceId,jdbcType=INTEGER},
+          </if>
+          <if test="gp.gitProjectName != null">
+            git_project_name = #{gp.gitProjectName,jdbcType=VARCHAR},
+          </if>
+          <if test="gp.gitProjectUrl != null">
+            git_project_url = #{gp.gitProjectUrl,jdbcType=VARCHAR},
+          </if>
+          <if test="gp.gitProjectDescription != null">
+            git_project_description = #{gp.gitProjectDescription,jdbcType=VARCHAR},
+          </if>
+          <if test="gp.gitProjectCreatedAt != null">
+            git_project_created_at = #{gp.gitProjectCreatedAt,jdbcType=DATE}
+          </if>
+        </set>
+        where git_project_id = #{gp.gitProjectId,jdbcType=INTEGER}
+    </update>
+    <select id="getGitProjectByUuid" resultMap="BaseResultMap" resultType="java.lang.String">
+      select *
+      from git_project
+      where uuid = #{uuid};
+    </select>
+    <select id="selectByProjectIdAndGroupId" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.GitProject">
+      select *
+      from git_project
+      <where>
+        <if test="gitProjectIdList != null and gitProjectIdList.size()>0">
+          AND git_project_id in
+          <foreach collection="gitProjectIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+          </foreach>
+        </if>
+        <if test="gitGroupIdList != null and gitGroupIdList.size()>0">
+          AND git_namespace_id in
+          <foreach collection="gitGroupIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+          </foreach>
+        </if>
+
+      </where>
+
+    </select>
+  <select id="selectCodeSpaceByProjectKey" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.GitProject">
+    select * from git_project t1
+    LEFT JOIN jira_gitproject_relation t2
+    on t1.git_project_id = t2.git_project_id
+    WHERE t2.jira_project_key = #{projectKey};
+  </select>
+
+  <select id="selectProjectByGroupId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from git_project
+      <where>
+        <if test="groupId != null">
+          git_namespace_id = #{groupId,jdbcType=INTEGER}
+        </if>
+      </where>
+
+  </select>
+
+  <select id="selectByProjectId" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.GitProject">
+    select * from git_project where git_project_id = #{gitProjectId}
+  </select>
+
+  <update id="updateGitprojectByUUid" parameterType="com.pingan.starlink.model.GitProject">
+    update git_project
+    <set>
+      <if test="gp.gitProjectId != null">
+        git_project_id = #{gp.gitProjectId,jdbcType=INTEGER},
+      </if>
+      <if test="gp.gitNamespaceId != null">
+        git_namespace_id = #{gp.gitNamespaceId,jdbcType=INTEGER},
+      </if>
+      <if test="gp.gitProjectName != null">
+        git_project_name = #{gp.gitProjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.gitProjectUrl != null">
+        git_project_url = #{gp.gitProjectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.gitProjectDescription != null">
+        git_project_description = #{gp.gitProjectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.gitProjectCreatedAt != null">
+        git_project_created_at = #{gp.gitProjectCreatedAt,jdbcType=DATE}
+      </if>
+    </set>
+    where uuid = #{gp.uuid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getGroupIdGitProjectId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select git_namespace_id from git_project where git_project_id = #{projectId}
+  </select>
+</mapper>

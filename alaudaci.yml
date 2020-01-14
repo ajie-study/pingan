@@ -1,0 +1,15 @@
+version: "0.1.0"
+pre_ci_boot:
+    image: index.alauda.cn/alaudaorg/eirene-ci
+    tag: 0.1
+ci:
+    - mvn package
+    - cp ./Dockerfile $ALAUDACI_DEST_DIR/Dockerfile
+    - cp config/*.conf $ALAUDACI_DEST_DIR/
+    - cp *.sh $ALAUDACI_DEST_DIR/
+    - cp *.py $ALAUDACI_DEST_DIR/
+    - cp ./target/starlink-*.jar $ALAUDACI_DEST_DIR/
+
+
+
+

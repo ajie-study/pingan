@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pingan.starlink.mapper.GitgroupDepartmentRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.GitgroupDepartmentRelation" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="gitgroup_id" property="gitgroupId" jdbcType="INTEGER" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+  </resultMap>
+  <update id="updateGitgroupDev" parameterType="com.pingan.starlink.mapper.GitgroupDepartmentRelationMapper">
+    update gitgroup_department_relation
+    <set>
+      <if test="gdr.gitgroupId != null">
+        gitgroup_id = #{gdr.gitgroupId,jdbcType=INTEGER},
+      </if>
+      <if test="gdr.department != null">
+        department = #{gdr.department,jdbcType=VARCHAR}
+      </if>
+    </set>
+      where uuid = #{gdr.uuid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAllByDept" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.GitgroupDepartmentRelation" parameterType="java.lang.String">
+      select * from gitgroup_department_relation
+      <where>
+        <if test="department != null">
+          and department = #{department}
+        </if>
+      </where>
+    </select>
+</mapper>

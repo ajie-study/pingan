@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.ArtifactoryRepoMapper">
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.ArtifactoryRepo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="repo_name" jdbcType="VARCHAR" property="repoName" />
+    <result column="repo_url" jdbcType="VARCHAR" property="repoUrl" />
+    <result column="repo_type" jdbcType="VARCHAR" property="repoType" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+  </resultMap>
+</mapper>

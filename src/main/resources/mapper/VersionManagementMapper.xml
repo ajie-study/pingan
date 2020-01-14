@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.VersionManagementMapper">
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.VersionManagement">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="version_name" jdbcType="VARCHAR" property="versionName" />
+    <result column="version_id" jdbcType="VARCHAR" property="versionId" />
+    <result column="version_type" jdbcType="VARCHAR" property="versionType" />
+    <result column="risk_level" jdbcType="VARCHAR" property="riskLevel" />
+    <result column="test_status" jdbcType="VARCHAR" property="testStatus" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="release_date" jdbcType="VARCHAR" property="releaseDate" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="develop_contacts" jdbcType="VARCHAR" property="developContacts" />
+    <result column="dependent_version" jdbcType="VARCHAR" property="dependentVersion" />
+    <result column="test_plan" jdbcType="VARCHAR" property="testPlan" />
+    <result column="version_describe" jdbcType="VARCHAR" property="versionDescribe" />
+    <result column="project_key" jdbcType="VARCHAR" property="projectKey" />
+    <result column="version_status" jdbcType="VARCHAR" property="versionStatus" />
+    <result column="issue_num" jdbcType="INTEGER" property="issueNum" />
+    <result column="release_issues" jdbcType="VARCHAR" property="releaseIssues" />
+    <result column="version_manager" jdbcType="VARCHAR" property="versionManager" />
+  </resultMap>
+
+    <select id="selectByVersionId" resultMap="BaseResultMap">
+        select * from version_management where version_id = #{versionId}
+    </select>
+
+    <select id="selectByProjectKey" resultMap="BaseResultMap">
+        select * from version_management where project_key = #{projectKey}
+    </select>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <properties>
+        <property name="LOG_HOME">/var/log/mathilde</property>
+        <property name="FILE_NAME">eirene</property>
+        <!-- <property name="log.sql.level">info</property> -->
+    </properties>
+
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %l - %msg%n"/>
+        </Console>
+
+        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH}-%i.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="48"/>
+        </RollingRandomAccessFile>
+
+        <Kafka name="KafkaDev" topic="starlink_devops" syncSend="false">
+            <PatternLayout pattern="%date %message" />
+            <Property name="bootstrap.servers">29.2.200.31:9092</Property>
+        </Kafka>
+        <Kafka name="KafkaTest" topic="starlink_devops" syncSend="false">
+            <PatternLayout pattern="%date %message" />
+            <Property name="bootstrap.servers">29.2.200.31:9092</Property>
+        </Kafka>
+        <Kafka name="KafkaPrd" topic="starlink_devops" syncSend="false">
+            <PatternLayout pattern="%date %message" />
+            <Property name="bootstrap.servers">29.2.200.38:9092,29.2.200.41:9092,29.2.200.44:9092,29.2.200.86:9092,29.2.200.87:9092,29.2.200.89:9092</Property>
+        </Kafka>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingRandomAccessFile"/>
+        </Root>
+
+        <!-- <Logger name="com.mengdee.dao" level="${log.sql.level}" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger> -->
+        <Logger name="kafkaLogDev" level="trace">
+            <AppenderRef ref="KafkaDev" />
+        </Logger>
+        <Logger name="kafkaLogTest" level="trace">
+            <AppenderRef ref="KafkaTest" />
+        </Logger>
+        <Logger name="kafkaLogPrd" level="trace">
+            <AppenderRef ref="KafkaPrd" />
+        </Logger>
+    </Loggers>
+</Configuration>

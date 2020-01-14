@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.Project">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="project_key" jdbcType="VARCHAR" property="projectKey" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_template_key" jdbcType="VARCHAR" property="projectTemplateKey" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="lead" jdbcType="VARCHAR" property="lead" />
+    <result column="assigneeType" jdbcType="VARCHAR" property="assigneetype" />
+    <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+    <result column="system" jdbcType="VARCHAR" property="system" />
+    <result column="sub_system" jdbcType="VARCHAR" property="subSystem" />
+    <result column="dev_mode" jdbcType="VARCHAR" property="devMode" />
+    <result column="host_system" jdbcType="VARCHAR" property="hostSystem" />
+    <result column="auxiliary_system" jdbcType="VARCHAR" property="auxiliarySystem" />
+    <result column="dev_group" jdbcType="VARCHAR" property="devGroup" />
+    <result column="pmo" jdbcType="VARCHAR" property="pmo" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="plan_end_date" jdbcType="DATE" property="planEndDate" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="owner" jdbcType="VARCHAR" property="owner" />
+    <result column="plan_start_date" jdbcType="DATE" property="planStartDate" />
+    <result column="artifactory_url" jdbcType="VARCHAR" property="artifactoryUrl" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="project_status" jdbcType="VARCHAR" property="projectStatus" />
+  </resultMap>
+    <update id="updateProject" parameterType="com.pingan.starlink.model.Project">
+        update project
+        <set>
+            <if test="project.projectType != null">
+                project_type = #{project.projectType,jdbcType=VARCHAR},
+            </if>
+            <if test="project.system != null">
+                system = #{project.system,jdbcType=VARCHAR},
+            </if>
+            <if test="project.subSystem != null">
+                sub_system = #{project.subSystem,jdbcType=VARCHAR},
+            </if>
+            <if test="project.devMode != null">
+                dev_mode = #{project.devMode,jdbcType=VARCHAR},
+            </if>
+            <if test="project.hostSystem != null">
+                host_system = #{project.hostSystem,jdbcType=VARCHAR},
+            </if>
+            <if test="project.auxiliarySystem != null">
+                auxiliary_system = #{project.auxiliarySystem,jdbcType=VARCHAR},
+            </if>
+            <if test="project.devGroup != null">
+                dev_group = #{project.devGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="project.pmo != null">
+                pmo = #{project.pmo,jdbcType=VARCHAR},
+            </if>
+            <if test="project.status != null">
+                status = #{project.status,jdbcType=VARCHAR},
+            </if>
+            <if test="project.endDate != null">
+                end_date = #{project.endDate,jdbcType=DATE},
+            </if>
+            <if test="project.planEndDate != null">
+                plan_end_date = #{project.planEndDate,jdbcType=DATE},
+            </if>
+            <if test="project.createDate != null">
+                create_date = #{project.createDate,jdbcType=DATE},
+            </if>
+            <if test="project.owner != null">
+                owner = #{project.owner,jdbcType=VARCHAR},
+            </if>
+            <if test="project.planStartDate != null">
+                plan_start_date = #{project.planStartDate,jdbcType=DATE},
+            </if>
+            <if test="project.artifactoryUrl != null">
+                artifactory_url = #{project.artifactoryUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="project.department != null">
+                department = #{project.department,jdbcType=VARCHAR}
+            </if>
+            <if test="project.projectStatus != null">
+                project_status = #{project.projectStatus,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where project_key = #{project.projectKey,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteByProjectKey">
+        delete from project where project_key = #{projectKey}
+    </delete>
+
+    <select id="selectByProjectKey" resultMap="BaseResultMap">
+        select * from project where project_key = #{projectKey}
+    </select>
+
+    <select id="departmentCount" resultType="com.pingan.starlink.vo.jira.DepartmentCountVO">
+         select department,count(uuid) as count from project where department != "" group by department
+    </select>
+
+    <select id="selectByProjectKeyAndDepartment" resultMap="BaseResultMap">
+        select *
+        from project
+        <where>
+            <if test="projectKey != null and projectKey.size()&gt;0">
+                AND project_key in
+                <foreach close=")" collection="projectKey" index="index" item="item" open="(" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="department != null and department.size()&gt;0">
+                AND department in
+                <foreach close=")" collection="department" index="index" item="item" open="(" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

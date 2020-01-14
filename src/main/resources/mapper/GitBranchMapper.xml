@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pingan.starlink.mapper.GitBranchMapper" >
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.GitBranch" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="git_branch_name" property="gitBranchName" jdbcType="VARCHAR" />
+    <result column="git_project_id" property="gitProjectId" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="release" property="release" jdbcType="BIT" />
+    <result column="commit_by" property="commitBy" jdbcType="VARCHAR" />
+    <result column="commit_at" property="commitAt" jdbcType="TIMESTAMP" />
+    <result column="branch_status" property="branchStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insertGitBranch" parameterType="com.pingan.starlink.model.GitBranch">
+    INSERT INTO `git_branch` VALUES(#{uuid},#{gitBranchName},#{gitProjectId},#{description},#{createdBy},#{createdAt},#{release},#{commitBy},#{commitAt},#{branchStatus});
+  </insert>
+
+  <select id="selectBranchByProjectId" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.GitBranch" parameterType="java.lang.Integer">
+    select *
+    from git_branch  where  branch_status = #{branchStatus}
+
+      <if test="gitProjectId != null">
+         and git_project_id = #{gitProjectId};
+      </if>
+  </select>
+
+  <select id="selectBranchsByUuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from  git_branch where  uuid = #{uuid}
+  </select>
+
+  <update id="updateBranchsByUuid" parameterType="com.pingan.starlink.model.GitBranch">
+    update git_branch
+    <set>
+      <if test="gitBranchName != null">
+        git_branch_name = #{gitBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="gitProjectId != null">
+        git_project_id = #{gitProjectId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="release != null">
+        `release` = #{release,jdbcType=BIT},
+      </if>
+      <if test="commitBy != null">
+        commit_by = #{commitBy,jdbcType=VARCHAR},
+      </if>
+      <if test="commitAt != null">
+        commit_at = #{commitAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="branchStatus != null">
+        branch_status = #{branchStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+
+
+
+  <update id = "updateBranchsStatusByName">
+    update git_branch t set t.branch_status = #{branchStatus}
+      where  t.git_branch_name = #{name} and  t.git_project_id = #{projectId}
+  </update>
+  <update id="updateBranchCommitAndTime">
+    update git_branch t set t.commit_by = #{commitName} , t.commit_at = #{commitDate}
+    where  t.git_branch_name = #{branchName} and  t.git_project_id = #{projectId}
+  </update>
+</mapper>

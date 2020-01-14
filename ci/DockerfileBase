@@ -1,0 +1,6 @@
+FROM index.alauda.cn/alaudaorg/builder-java:openjdk8-alpine
+
+RUN apk add --no-cache git supervisor vim bash curl
+
+#docker build -t index.alauda.cn/alaudaorg/eirene:base .
+#docker push index.alauda.cn/alaudaorg/eirene:base

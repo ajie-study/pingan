@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  enigma:
+    image: index.alauda.cn/alaudaorg/eirene:latest
+    container_name: eirene
+    ports:
+      - "18080:18080"
+    environment:
+      APP_PROFILE: "dev"
+    privileged: true
+    restart: always
+  mysql:
+    image: index.alauda.cn/alaudaorg/mysql-master:latest
+    container_name: mysql-eirene
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "alauda"
+    privileged: true
+    restart: always
+    volumes:
+      - /alauda/data/mysql/db:/var/lib/mysql

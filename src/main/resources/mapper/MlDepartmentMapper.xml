@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pingan.starlink.mapper.MlDepartmentMapper">
+  <resultMap id="BaseResultMap" type="com.pingan.starlink.model.MlDepartment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+    <result column="department_key" jdbcType="VARCHAR" property="departmentKey" />
+    <result column="next_project_index" jdbcType="INTEGER" property="nextProjectIndex" />
+    <result column="roles" jdbcType="VARCHAR" property="roles" />
+    <result column="superior_department" jdbcType="VARCHAR" property="superiorDepartment" />
+    <result column="inferior_department" jdbcType="VARCHAR" property="inferiorDepartment" />
+    <result column="describes" jdbcType="VARCHAR" property="describes" />
+  </resultMap>
+
+  <update id="updateByDepartmentName">
+    update ml_department
+    set  next_project_index = #{index}
+    where department_name = #{departmentName}
+  </update>
+
+  <select id="selectByName" resultMap="BaseResultMap" resultType="com.pingan.starlink.model.MlDepartment">
+    select * from ml_department where department_name = #{departmentName}
+  </select>
+
+</mapper>
